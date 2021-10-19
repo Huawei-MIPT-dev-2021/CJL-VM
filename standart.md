@@ -96,7 +96,7 @@ sint64 z = x; // incorrect
 // def uint a and uint b
 if (a - b < 3) {}
 
-dbl num = 3. // 5.;
+dbl num = 3. _/ 5.; // using of special div for doubles
 
 []utf8 array = "Hello CJL!"; // correct
 word64 w = 'Hello)))'; // correct
