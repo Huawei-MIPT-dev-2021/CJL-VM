@@ -2,8 +2,8 @@
 ![image](https://user-images.githubusercontent.com/91914454/137986186-43a28636-42b9-4750-aa90-6805c9058f01.png)
 
 ## CJL language features
-* Strong type convertions
-* Strong out of range control TODO: ?
+* Basic type convertions
+* Strong out of range control
 * Strong and weak references
 * All is a class, classes as single files
 * All classes are public, modifiers are used for fields and methods
@@ -59,7 +59,7 @@ public:
 		this.num = 21;
 	}
 	dummy() const -> int {
-		return num;		// error: use this
+		return num;		// correct
 		return this.num;	// correct
 	}
 	printNumber() const -> void {
@@ -81,12 +81,11 @@ static, const
 ```
 
 ## Type convertions
-There are **no** type convertions. \
-Also for `double` it is recomended to implement **dot numbers** separately:
 ```
-double a = 1; // error
-double a = 1.; // correct
-double b = 2. + 3. + 1; // error, 1 --> 1.
+char --> int --> double // implicitly
+
+int --> char // possible (by explicit type convertion) by exluding leading bits
+double --> int // possible (by explicit type convertion) by exluding fractional part (1.73 --> 1)
 ```
 
 ## References
@@ -111,28 +110,18 @@ public:
 ```
 
 ## Loops
-* For:
+* For (C++):
 ```
 for (<single variable definition>; <predicat>; <operation for next>) {
 	....
 }
 ```
-* While:
-```
-while(<predicat>) {
-	....
-}
-```
-* Do while:
-```
-do {
-	....
-} while(<predicat>);
-```
+
+`while` and `do while` can be realized using `for`.
 
 
 ## Class inheritance
-Only **public** inheritance is available. `override` keyword is written in the end of the method signature
+Only `public` inheritance is available. `override` keyword is written in the end of the method signature
 for all methods which produce override.
 fileA.cjl:
 ```
