@@ -49,7 +49,7 @@ nothing = 0;
 int a;		// correct, a == 0 
 int b = 1;	// b == 1
 ```
-* Fields of the class are accessed with `this.method` syntax, **else error occured**. Methods are called without using `this`.
+* Fields of the class are accessed with `this.method` syntax **only**. Methods are called without using `this`.
 Here `this` is a reference to the object itself.
 ```
 class Cl {
@@ -60,7 +60,7 @@ public:
 	}
 	dummy() const -> int {
 		return num;		// correct
-		return this.num;	// correct
+		return this.num;
 	}
 	printNumber() const -> void {
 		print(dummy());
@@ -82,10 +82,14 @@ static, const
 
 ## Type convertions
 ```
-char --> int --> double // implicitly
-
+char --> int // implicitly
 int --> char // possible (by explicit type convertion) by exluding leading bits
-double --> int // possible (by explicit type convertion) by exluding fractional part (1.73 --> 1)
+```
+Also for `double` it is recomended to implement **dot numbers** separately:
+```
+double a = 1; // error
+double a = 1.; // correct
+double b = 2. + 3. + 1; // error, 1 --> 1.
 ```
 
 ## References
