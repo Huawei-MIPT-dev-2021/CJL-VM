@@ -59,8 +59,8 @@ public:
 		this.num = 21;
 	}
 	dummy() const -> int {
-		return num;		// correct
-		return this.num;
+		return num;		// error: use this.num
+		return this.num;	// correct
 	}
 	printNumber() const -> void {
 		print(dummy());
