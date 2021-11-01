@@ -2,9 +2,9 @@
 ![image](https://user-images.githubusercontent.com/91914454/137986186-43a28636-42b9-4750-aa90-6805c9058f01.png)
 
 ## CJL language features
-* Strong type convertions
-* Strong out of range control TODO: ?
-* Unique references and copies of references
+* Basic type convertions
+* Strong out of range control
+* Strong and weak references
 * All is a class, classes as single files
 * All classes are public, modifiers are used for fields and methods
 * All primitives are initialized with zeros if another value wasn't provided
@@ -49,7 +49,7 @@ nothing = 0;
 int a;		// correct, a == 0 
 int b = 1;	// b == 1
 ```
-* Fields of the class are accessed with `this.method` syntax. Methods are called without using `this`.
+* Fields of the class are accessed with `this.method` syntax **only**. Methods are called without using `this`.
 Here `this` is a reference to the object itself.
 ```
 class Cl {
@@ -59,7 +59,7 @@ public:
 		this.num = 21;
 	}
 	dummy() const -> int {
-		return num;		// error: use this
+		return num;		// error: use this.num
 		return this.num;	// correct
 	}
 	printNumber() const -> void {
@@ -67,6 +67,10 @@ public:
 	}
 }
 ```
+
+* `and` and `or` are used instead of `&&` and `||` respectively
+
+## Keywords priority
 * Keywords are added to the function signature in the following order:
 ```
 static, const, override
@@ -75,12 +79,18 @@ static, const, override
 ```
 static, const
 ```
-* `and` and `or` are used instead of `&&` and `||` respectively
 
-<!-- ## type convertions
+## Type convertions
 ```
-
-``` -->
+char --> int // implicitly
+int --> char // possible (by explicit type convertion) by exluding leading bits
+```
+Also for `double` it is recomended to implement **dot numbers** separately:
+```
+double a = 1; // error
+double a = 1.; // correct
+double b = 2. + 3. + 1; // error, 1 --> 1.
+```
 
 ## References
 All objects are created with a call to constructor. References (as well as primitives) are copied when passing to
@@ -91,35 +101,31 @@ Object obj = Object(arg1, arg2, ....);
 Example of passing the object (by reference) into method:
 ```
 public:
-	changeNum(Object obj) static const -> int {
+	changeNum(Object obj) static const -> int { // Object reference!
 		obj.num = 20;	// obj.num = 20 in the main()
 		obj = new Object(100);	// obj from main() is intact
 		return obj.num;		// 100 
 	}
 
-	main(String[] args]) static -> int {
+	main(String[] args) static -> int {
 		Object obj = new Object(10);	// obj.num = 10
 		print(obj.num);		// prints 20
 	}
 ```
 
 ## Loops
-* For:
+* For (C++):
 ```
 for (<single variable definition>; <predicat>; <operation for next>) {
 	....
 }
 ```
-* While:
-```
-while(<predicat>) {
-	....
-}
-```
+
+`while` and `do while` can be realized using `for`.
 
 
 ## Class inheritance
-Only public inheritance is available. `override` keyword is written in the end of the method signature
+Only `public` inheritance is available. `override` keyword is written in the end of the method signature
 for all methods which produce override.
 fileA.cjl:
 ```
